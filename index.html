@@ -260,7 +260,7 @@
 
 <script>
     // ⚠️ 請替換為你部署的 Google Apps Script Web App URL
-    const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXQSeuHPvHPNNeWJ5mM5dp9y6Mxh_eCR5HAk1085yPbfN7_U5XF5n5IXgre2pd4saBPw/exec";
 
     const questions = [
         {
@@ -425,7 +425,7 @@
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
 
-        if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL") {
+        if (GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyXQSeuHPvHPNNeWJ5mM5dp9y6Mxh_eCR5HAk1085yPbfN7_U5XF5n5IXgre2pd4saBPw/exec") {
             alert("請先設定正確的 Google Apps Script URL！");
             return;
         }
