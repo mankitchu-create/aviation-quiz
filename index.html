@@ -8,11 +8,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
 
         :root {
-            --primary-color: #D35400; /* 溫暖的橘紅色 */
-            --accent-color: #FF7E5F;  /* 珊瑚紅 */
-            --bg-gradient: linear-gradient(135deg, #FFF3E0 0%, #FFEFBA 100%); /* 奶茶/陽光漸層 */
+            --primary-color: #D35400;
+            --accent-color: #FF7E5F;
+            --bg-gradient: linear-gradient(135deg, #FFF3E0 0%, #FFEFBA 100%);
             --card-bg: #FFFFFF;
-            --text-color: #5D4037;    /* 暖咖啡色 */
+            --text-color: #5D4037;
         }
 
         body {
@@ -44,7 +44,6 @@
             color: var(--primary-color);
             font-weight: 900;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
         .subtitle {
@@ -52,30 +51,27 @@
             margin-bottom: 30px;
             font-weight: 700;
             font-size: 1.2rem;
-            letter-spacing: 1px;
         }
 
-        /* 互動式暖色按鍵 */
         .btn {
             background: linear-gradient(45deg, #FF7E5F, #FEB47B);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 15px 35px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+            margin: 5px;
         }
 
         .btn:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-3px) scale(1.03);
             box-shadow: 0 12px 25px rgba(255, 126, 95, 0.6);
-            background: linear-gradient(45deg, #FEB47B, #FF7E5F);
         }
 
-        /* 題目選項設計 */
         .options-container {
             display: flex;
             flex-direction: column;
@@ -93,26 +89,20 @@
             transition: all 0.4s ease;
             font-size: 1.05rem;
             line-height: 1.6;
-            color: #4E342E;
-            position: relative;
-            overflow: hidden;
         }
 
         .option:hover {
             border-color: var(--accent-color);
             background-color: #FFF9F2;
             transform: translateX(10px);
-            box-shadow: -5px 5px 15px rgba(211, 84, 0, 0.08);
         }
 
-        /* 被選中時的過場效果 */
         .option.selected {
             background: linear-gradient(120deg, #FF7E5F, #FEB47B);
             color: white;
             border-color: transparent;
             transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.3);
-            pointer-events: none; /* 防止連點 */
+            pointer-events: none;
         }
 
         .question-text {
@@ -120,7 +110,6 @@
             font-weight: 700;
             margin-bottom: 20px;
             color: #C0392B;
-            line-height: 1.6;
             text-align: left;
         }
 
@@ -137,74 +126,89 @@
             transform: translateY(0);
         }
 
-        /* 用於換題的淡出效果 */
         .fade-out {
             opacity: 0 !important;
             transform: translateY(-20px) !important;
         }
 
-        /* 華麗的測驗結果卡片設計 */
         .result-card {
             background: linear-gradient(135deg, #FFF9F2 0%, #FFE0B2 100%);
-            padding: 40px 30px;
+            padding: 30px;
             border-radius: 20px;
             margin-top: 20px;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.8), 0 10px 30px rgba(211,84,0,0.15);
             border: 2px dashed #FFB74D;
         }
 
         .illustration-box {
-            font-size: 5rem;
-            margin-bottom: 15px;
+            font-size: 4.5rem;
+            margin-bottom: 10px;
             animation: float 3s ease-in-out infinite;
-            text-shadow: 0 10px 15px rgba(0,0,0,0.1);
         }
 
         .result-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: #C0392B;
             font-weight: 900;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
         }
         
         .result-discipline {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #E67E22;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             background: #FFF;
             display: inline-block;
             padding: 5px 20px;
             border-radius: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .result-desc {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             line-height: 1.8;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: justify;
-            font-weight: 500;
         }
 
         .highlight-box {
-            background: linear-gradient(to right, #ffffff, #FFF3E0);
+            background: #FFFFFF;
             border-left: 6px solid var(--accent-color);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             font-weight: bold;
             color: #D35400;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
             text-align: left;
+            margin-bottom: 25px;
         }
 
-        /* 動畫設定 */
+        /* 輸入框與記錄區塊 */
+        .record-form {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .name-input {
+            width: 80%;
+            max-width: 300px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #FFE0B2;
+            border-radius: 25px;
+            outline: none;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .name-input:focus {
+            border-color: var(--accent-color);
+        }
+
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
@@ -215,8 +219,8 @@
     <div id="intro" class="section active">
         <h1>2026 航空學分特訓基地</h1>
         <div class="subtitle">✨ 未來機組人員相性測驗 ✨</div>
-        <div style="font-size: 4rem; margin-bottom: 10px; animation: float 3s ease-in-out infinite;">✈️ ☁️ 🧳</div>
-        <p style="margin-bottom: 30px; line-height: 1.8; color: #6D4C41; font-weight: bold; font-size: 1.1rem;">
+        <div style="font-size: 4rem; margin-bottom: 10px;">✈️ ☁️ 🧳</div>
+        <p style="margin-bottom: 30px; line-height: 1.8; color: #6D4C41; font-weight: bold;">
             你擁有哪一種隱藏的航空天賦？<br>
             透過 4 條日常情境題，測出你最終的「航空職人命格」！
         </p>
@@ -225,31 +229,39 @@
 
     <!-- 測驗頁面 -->
     <div id="quiz" class="section">
-        <div id="question-progress" style="text-align: left; color: #E67E22; margin-bottom: 15px; font-weight: 900; font-size: 1.1rem;"></div>
+        <div id="question-progress" style="text-align: left; color: #E67E22; margin-bottom: 15px; font-weight: 900;"></div>
         <div class="question-text" id="question-text"></div>
-        <div class="options-container" id="options-container">
-            <!-- 選項會透過 JS 動態生成 -->
-        </div>
+        <div class="options-container" id="options-container"></div>
     </div>
 
     <!-- 結果頁面 -->
     <div id="result" class="section">
         <h1 style="font-size: 1.8rem; color: #5D4037;">你的專屬航空職人命格是...</h1>
         <div class="result-card">
-            <!-- 手繪風/Fancy 插圖區域 -->
             <div class="illustration-box" id="result-illustration"></div>
-            
             <div class="result-title" id="result-title"></div>
             <div class="result-discipline" id="result-discipline"></div>
             <div class="result-desc" id="result-desc"></div>
             <div class="highlight-box" id="result-highlight"></div>
+
+            <!-- 可選姓名輸入與儲存表格 -->
+            <div class="record-form">
+                <p style="margin-top: 0; font-weight: bold; color: #5D4037;">📝 登記測試記錄（可選）</p>
+                <input type="text" id="user-name" class="name-input" placeholder="請輸入姓名 / 暱稱 (可留空)">
+                <br>
+                <button class="btn" id="submit-btn" onclick="submitRecord()">提交記錄 📤</button>
+                <div id="status-msg" style="margin-top: 10px; font-weight: bold; font-size: 0.95rem;"></div>
+            </div>
         </div>
         <br>
-        <button class="btn" onclick="location.reload()" style="margin-top: 10px;">再測一次 🔄</button>
+        <button class="btn" onclick="location.reload()">再測一次 🔄</button>
     </div>
 </div>
 
 <script>
+    // ⚠️ 請替換為你部署的 Google Apps Script Web App URL
+    const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL";
+
     const questions = [
         {
             text: "Q1. 放學時，你同班朋友去旺角食飯。出地鐵站嗰陣，突然發現其中一個朋友唔見咗，電話又無人聽。呢個時候，你第一時間會點做？",
@@ -295,37 +307,37 @@
             title: "【空服極限 Carry 俠】",
             discipline: "(航空機艙及客運服務)",
             desc: "天生具備神級的情商(EQ)與讀心術！就算遇到瘋狂投訴的奧客，你都能面帶微笑、優雅地用一杯熱茶化解危機。在空中飛行的世界裡，你就是全機乘客的安全感來源。",
-            highlight: "💡 Programme Code: BA114057\n想體驗模擬機艙實習？這科就是你的首選！(請參考課程 QR 碼)"
+            highlight: "💡 Programme Code: BA114057\n想體驗模擬機艙實習？這科就是你的首選！"
         },
         "B": {
             illustration: "🏢 🎧 🧠",
             title: "【上帝視角：塔台指揮官】",
             discipline: "(機場營運管理)",
             desc: "天生自帶超強大腦與抗壓能力！擅長在混亂中理出頭緒，就算機場有 100 班航機同時起降、天氣突變，你都能冷靜調度。你是掌控整個機場運作的核心大腦。",
-            highlight: "💡 Programme Code: BA114107\n想學習世界級機場的營運與危機處理？來這裡就對了。(請參考課程 QR 碼)"
+            highlight: "💡 Programme Code: BA114107\n想學習世界級機場的營運與危機處理？來這裡就對了。"
         },
         "C": {
             illustration: "📦 🌍 🚚",
             title: "【環球物資傳送門】",
             discipline: "(航空及物流)",
             desc: "擁有最強的空間感與時間管理能力！網購的iPhone 點樣最快由工廠送到你手上？疫苗點樣在低溫下安全跨國運送？全靠你的精準計算。你是鏈接全球經濟的幕後黑手。",
-            highlight: "💡 Programme Code: BA114056\n結合大數據與全球供應鏈，是全港極缺人才的高薪行業！(請參考課程 QR 碼)"
+            highlight: "💡 Programme Code: BA114056\n結合大數據與全球供應鏈，是全港極缺人才的高薪行業！"
         },
         "D": {
             illustration: "🗺️ 🚅 🏙️",
             title: "【未來交通規劃大師】",
             discipline: "(航空服務及運輸學)",
             desc: "充滿好奇心與宏觀視野的策略家。比起單一崗位，你更喜歡研究整條航線、公共交通網絡的規劃。高瞻遠矚，未來的航空政策與運輸大局將由你來改寫！",
-            highlight: "💡 Programme Code: BA114058\n出路最廣闊，涵蓋航空諮詢、政府運輸部門及大型交通機構。(請參考課程 QR 碼)"
+            highlight: "💡 Programme Code: BA114058\n出路最廣闊，涵蓋航空諮詢、政府運輸部門及大型交通機構。"
         }
     };
 
     let currentQuestionIndex = 0;
     let answers = [];
+    let currentResult = null;
 
     function showSection(id) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-        // 稍微延遲以確保動畫重新觸發
         setTimeout(() => {
             document.getElementById(id).classList.add('active');
         }, 50);
@@ -350,28 +362,21 @@
             const btn = document.createElement('div');
             btn.className = 'option';
             btn.innerText = opt.text;
-            // 綁定點擊事件，傳入選項 ID 與被點擊的元素本身
             btn.onclick = function() { selectOption(opt.id, this); };
             optionsContainer.appendChild(btn);
         });
     }
 
-    // 加入延遲與過場動畫的選項點擊函數
     function selectOption(id, element) {
-        // 如果已經有選項被選中（動畫進行中），則忽略點擊，防止連點出錯
         if (document.querySelector('.option.selected')) return;
 
-        // 加上 selected 類別，觸發反白的 CSS 動畫
         element.classList.add('selected');
         answers.push(id);
 
-        // 停頓 0.7 秒讓使用者看清楚自己選了什麼
         setTimeout(() => {
             const quizSection = document.getElementById('quiz');
-            // 整個題目區塊淡出
             quizSection.classList.add('fade-out');
 
-            // 等待淡出動畫(0.4秒)完成後，換題並淡入
             setTimeout(() => {
                 if (currentQuestionIndex < questions.length - 1) {
                     currentQuestionIndex++;
@@ -382,7 +387,6 @@
                     calculateResult();
                 }
             }, 400);
-
         }, 700);
     }
 
@@ -405,14 +409,54 @@
     }
 
     function renderResult(id) {
-        const resultData = resultsData[id];
-        document.getElementById('result-illustration').innerText = resultData.illustration;
-        document.getElementById('result-title').innerText = resultData.title;
-        document.getElementById('result-discipline').innerText = resultData.discipline;
-        document.getElementById('result-desc').innerText = resultData.desc;
-        document.getElementById('result-highlight').innerText = resultData.highlight;
+        currentResult = resultsData[id];
+        document.getElementById('result-illustration').innerText = currentResult.illustration;
+        document.getElementById('result-title').innerText = currentResult.title;
+        document.getElementById('result-discipline').innerText = currentResult.discipline;
+        document.getElementById('result-desc').innerText = currentResult.desc;
+        document.getElementById('result-highlight').innerText = currentResult.highlight;
         
         showSection('result');
+    }
+
+    // 發送資料至 Google Sheets 函數
+    function submitRecord() {
+        const userName = document.getElementById('user-name').value.trim();
+        const statusMsg = document.getElementById('status-msg');
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL") {
+            alert("請先設定正確的 Google Apps Script URL！");
+            return;
+        }
+
+        submitBtn.disabled = true;
+        statusMsg.style.color = "#E67E22";
+        statusMsg.innerText = "正在傳送資料...";
+
+        const payload = {
+            name: userName || "匿名玩家",
+            title: currentResult.title,
+            discipline: currentResult.discipline
+        };
+
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            statusMsg.style.color = "#27AE60";
+            statusMsg.innerText = "✅ 記錄已成功上傳資料庫！";
+            submitBtn.innerText = "已提交";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusMsg.style.color = "#C0392B";
+            statusMsg.innerText = "❌ 傳送失敗，請稍後再試。";
+            submitBtn.disabled = false;
+        });
     }
 </script>
 
