@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 航空學分特訓基地：未來機組人員相性測驗</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f7f9fc;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* 互動式按鈕設計 (簡約 & 動態) */
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        /* 題目選項設計 */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option {
+            background-color: #fdfdfd;
+            border: 2px solid #ecf0f1;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .option:hover {
+            border-color: var(--accent-color);
+            background-color: #f4faff;
+            transform: translateX(10px); /* 滑鼠指到時的動態互動 */
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* 測驗結果卡片設計 */
+        .result-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .result-discipline {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .result-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .highlight-box {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 首頁 -->
+    <div id="intro" class="section active">
+        <h1>2026 航空學分特訓基地</h1>
+        <div class="subtitle">未來機組人員相性測驗</div>
+        <p style="margin-bottom: 30px; line-height: 1.6; color: #555;">
+            你擁有哪一種隱藏的航空天賦？<br>
+            透過 4 條日常情境題，測出你最終的「航空職人命格」！
+        </p>
+        <button class="btn" onclick="startQuiz()">開始測驗</button>
+    </div>
+
+    <!-- 測驗頁面 -->
+    <div id="quiz" class="section">
+        <div id="question-progress" style="text-align: left; color: #7f8c8d; margin-bottom: 10px; font-weight: bold;"></div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options-container" id="options-container">
+            <!-- 選項會透過 JS 動態生成 -->
+        </div>
+    </div>
+
+    <!-- 結果頁面 -->
+    <div id="result" class="section">
+        <h1>你的航空職人命格是...</h1>
+        <div class="result-card">
+            <div class="result-title" id="result-title"></div>
+            <div class="result-discipline" id="result-discipline"></div>
+            <div class="result-desc" id="result-desc"></div>
+            <div class="highlight-box" id="result-highlight"></div>
+        </div>
+        <br>
+        <button class="btn" onclick="location.reload()">重新測驗</button>
+    </div>
+</div>
+
+<script>
+    // 測驗資料 (根據 Questionnaire details.pdf 內容置入)
+    const questions = [
+        {
+            text: "Q1. 放學時，你同班朋友去旺角食飯。出地鐵站嗰陣，突然發現其中一個朋友唔見咗，電話又無人聽。呢個時候，你第一時間會點做？",
+            options: [
+                { id: "A", text: "主動安撫其他慌張嘅朋友，並提議去大家最常去嘅幾間店舖搵下，用溫暖同細心令大家冷靜落嚟。" },
+                { id: "B", text: "叫大家留喺原地唔好亂走，自己立刻行去地鐵站客務中心，請職員廣播，並喺腦海迅速規劃最有效率嘅搵人路線。" },
+                { id: "C", text: "開啟手機嘅「尋找朋友」或檢查邊個最後見過佢，計算時間同距離，推測佢最有可能卡喺邊個轉車站。" },
+                { id: "D", text: "觀察地鐵站出口嘅人流方向同地圖，分析呢個站嘅人流盲點，判斷佢係咪行錯咗去其他連接商場嘅出口。" }
+            ]
+        },
+        {
+            text: "Q2. 學校年園遊會(School Bazaar)輪到你哋班擺攤位，大家推舉你做核心負責人。你最想負責以下邊個工作崗位？",
+            options: [
+                { id: "A", text: "攤位前線嘅接待員兼PR！著起班衫，用最親切嘅笑容同叫座力吸引全校師生過嚟幫襯，確保每位顧客都玩得開心。" },
+                { id: "B", text: "現場總指揮！負責監督排隊人流、控制遊戲器材有冇故障，隨時處理現場突發情況(例如有人打尖或倒瀉飛排)。" },
+                { id: "C", text: "後勤及物資採購官！精準計算要買幾多原材料、搵邊間批發最平、貨物點樣最快運到學校，確保攤位絕對唔會斷貨。" },
+                { id: "D", text: "攤位總策劃師！負責研究全校攤位嘅分佈圖，分析邊個位置最好人流、設計最吸睛嘅攤位主題同長遠嘅宣傳策略。" }
+            ]
+        },
+        {
+            text: "Q3. 暑假你同屋企人或者朋友去海外自由行，由你負責編排全個行程。你嘅「排行程風格」最接近以下邊一種？",
+            options: [
+                { id: "A", text: "精選當地最熱門嘅打卡 Cafe、米芝蓮餐廳或者精緻體驗活動，確保同行嘅所有人行程中都覺得被照顧得無微不至。" },
+                { id: "B", text: "行程唔使太密，但每個景點之間嘅「交通接駁時間」一定要預留後備方案(例如萬一班車遲到點辦)，確保行程極度流暢。" },
+                { id: "C", text: "行程路線絕對唔走回頭路！精確計算行李箱限重、買手信嘅寄送方法，用最短嘅行車/行路路線去到最多目的地。" },
+                { id: "D", text: "比起普通景點，更想去體驗當地獨特嘅交通工具(如雙層巴士、新幹線、纜車)，觀察人哋嘅城市同交通網絡點解規劃得咁好。" }
+            ]
+        },
+        {
+            text: "Q4. 距離 JUPAS/E-App 選科截止仲有最後一日，你發現自己仲有3個學分/選修志願未填滿，此時你對未來大學生活最大嘅期望係乜？",
+            options: [
+                { id: "A", text: "希望修讀有得著專業制服、著重人際溝通、畢業後可以直接接觸世界各地不同文化旅客嘅實用學科。" },
+                { id: "B", text: "希望學習點樣管理一個大型國際地標(如世界級機場)嘅運作，享受喺幕後掌控全盤大局、指揮若定嘅成功感。" },
+                { id: "C", text: "希望掌握網購、全球物資流轉背後嘅高科技大數據商務知識，畢業後加入高薪、高前途嘅國際物流管理行業。" },
+                { id: "D", text: "希望擁有最廣闊嘅視野，研究全球交通運輸體系、航空公司管理與航空政策，成為未來交通界嘅策略與規劃人才。" }
+            ]
+        }
+    ];
+
+    // 測驗結果對應資料
+    const resultsData = {
+        "A": {
+            title: "【空服極限 Carry 俠】",
+            discipline: "(航空機艙及客運服務)",
+            desc: "天生具備神級的情商(EQ)與讀心術！就算遇到瘋狂投訴的奧客，你都能面帶微笑、優雅地用一杯熱茶化解危機。在空中飛行的世界裡，你就是全機乘客的安全感來源。",
+            highlight: "Programme Code: BA114057。想體驗模擬機艙實習？這科就是你的首選！(附航空機艙及客運服務課程 QR碼)"
+        },
+        "B": {
+            title: "【上帝視角：塔台指揮官】",
+            discipline: "(機場營運管理)",
+            desc: "天生自帶超強大腦與抗壓能力！擅長在混亂中理出頭緒，就算機場有 100 班航機同時起降、天氣突變，你都能冷靜調度。你是掌控整個機場運作的核心大腦。",
+            highlight: "Programme Code: BA114107。想學習世界級機場(如赤鱲角機場)的營運與危機處理？來這裡就對了。(附機場營運管理課程 QR碼)"
+        },
+        "C": {
+            title: "【環球物資傳送門】",
+            discipline: "(航空及物流)",
+            desc: "擁有最強的空間感與時間管理能力！網購的iPhone 點樣最快由工廠送到你手上？疫苗點樣在低溫下安全跨國運送？全靠你的精準計算。你是鏈接全球經濟的幕後黑手。",
+            highlight: "Programme Code: BA114056。結合大數據與全球供應鏈，是全港極缺人才的高薪行業！(附航空及物流課程 QR碼)"
+        },
+        "D": {
+            title: "【未來交通規劃大師】",
+            discipline: "(航空服務及運輸學)",
+            desc: "充滿好奇心與宏觀視野的策略家。比起單一崗位，你更喜歡研究整條航線、公共交通網絡的規劃。高瞻遠矚，未來的航空政策與運輸大局將由你來改寫！",
+            highlight: "Programme Code: BA114058。出路最廣闊，涵蓋航空諮詢、政府運輸部門及大型交通機構。(附航空服務及運輸學課程 QR碼)"
+        }
+    };
+
+    let currentQuestionIndex = 0;
+    let answers = [];
+
+    // 切換顯示的區塊
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // 開始測驗
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        answers = [];
+        showSection('quiz');
+        renderQuestion();
+    }
+
+    // 渲染題目
+    function renderQuestion() {
+        const q = questions[currentQuestionIndex];
+        document.getElementById('question-progress').innerText = `問題 ${currentQuestionIndex + 1} / ${questions.length}`;
+        document.getElementById('question-text').innerText = q.text;
+        
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = ''; // 清空選項
+
+        q.options.forEach(opt => {
+            const btn = document.createElement('div');
+            btn.className = 'option';
+            btn.innerText = opt.text;
+            btn.onclick = () => selectOption(opt.id);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    // 選擇選項
+    function selectOption(id) {
+        answers.push(id);
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+        } else {
+            calculateResult();
+        }
+    }
+
+    // 計算結果 (選最多英文字母的邏輯)
+    function calculateResult() {
+        // 計算每個選項出現的次數
+        const counts = answers.reduce((acc, val) => {
+            acc[val] = (acc[val] || 0) + 1;
+            return acc;
+        }, {});
+
+        // 找出出現最多次的字母 (若平手則取最先達到該次數的)
+        let maxCount = 0;
+        let finalResultId = 'A'; // 預設
+
+        for (const [key, value] of Object.entries(counts)) {
+            if (value > maxCount) {
+                maxCount = value;
+                finalResultId = key;
+            }
+        }
+
+        renderResult(finalResultId);
+    }
+
+    // 渲染最終結果
+    function renderResult(id) {
+        const resultData = resultsData[id];
+        document.getElementById('result-title').innerText = resultData.title;
+        document.getElementById('result-discipline').innerText = resultData.discipline;
+        document.getElementById('result-desc').innerText = resultData.desc;
+        document.getElementById('result-highlight').innerText = resultData.highlight;
+        
+        showSection('result');
+    }
+</script>
+
+</body>
+</html>
