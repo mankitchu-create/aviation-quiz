@@ -38,182 +38,69 @@
             position: relative;
             overflow: hidden;
             border: 3px solid #FFE0B2;
+            margin: 20px 0;
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #E67E22;
-            margin-bottom: 30px;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
+        h1 { color: var(--primary-color); font-weight: 900; margin-bottom: 10px; }
+        .subtitle { color: #E67E22; margin-bottom: 30px; font-weight: 700; font-size: 1.2rem; }
 
         .btn {
-            background: linear-gradient(45deg, #FF7E5F, #FEB47B);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
-            margin: 5px;
+            background: linear-gradient(45deg, #FF7E5F, #FEB47B); color: white;
+            border: none; padding: 15px 35px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4); margin: 5px;
         }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(255, 126, 95, 0.6);
+        .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 25px rgba(255, 126, 95, 0.6); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        .btn-outline {
+            background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);
         }
+        .btn-outline:hover { background: #FFF3E0; }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
+        .options-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
         .option {
-            background-color: #FAFAFA;
-            border: 2px solid #FFE0B2;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 1.05rem;
-            line-height: 1.6;
+            background-color: #FAFAFA; border: 2px solid #FFE0B2; padding: 20px;
+            border-radius: 15px; text-align: left; cursor: pointer; transition: all 0.4s ease;
+            font-size: 1.05rem; line-height: 1.6;
         }
+        .option:hover { border-color: var(--accent-color); background-color: #FFF9F2; transform: translateX(10px); }
+        .option.selected { background: linear-gradient(120deg, #FF7E5F, #FEB47B); color: white; border-color: transparent; transform: scale(1.02); pointer-events: none; }
 
-        .option:hover {
-            border-color: var(--accent-color);
-            background-color: #FFF9F2;
-            transform: translateX(10px);
-        }
+        .question-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #C0392B; text-align: left; }
 
-        .option.selected {
-            background: linear-gradient(120deg, #FF7E5F, #FEB47B);
-            color: white;
-            border-color: transparent;
-            transform: scale(1.02);
-            pointer-events: none;
-        }
+        .section { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(20px); }
+        .section.active { display: block; opacity: 1; transform: translateY(0); }
+        .fade-out { opacity: 0 !important; transform: translateY(-20px) !important; }
 
-        .question-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #C0392B;
-            text-align: left;
-        }
+        .result-card { background: linear-gradient(135deg, #FFF9F2 0%, #FFE0B2 100%); padding: 30px; border-radius: 20px; margin-top: 20px; border: 2px dashed #FFB74D; }
+        .illustration-box { font-size: 4.5rem; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
+        .result-title { font-size: 2rem; color: #C0392B; font-weight: 900; }
+        .result-discipline { font-size: 1.2rem; color: #E67E22; font-weight: bold; margin-bottom: 20px; background: #FFF; display: inline-block; padding: 5px 20px; border-radius: 30px; }
+        .result-desc { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
 
-        .section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            transform: translateY(20px);
-        }
-
-        .section.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-out {
-            opacity: 0 !important;
-            transform: translateY(-20px) !important;
-        }
-
-        .result-card {
-            background: linear-gradient(135deg, #FFF9F2 0%, #FFE0B2 100%);
-            padding: 30px;
-            border-radius: 20px;
-            margin-top: 20px;
-            border: 2px dashed #FFB74D;
-        }
-
-        .illustration-box {
-            font-size: 4.5rem;
-            margin-bottom: 10px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .result-title {
-            font-size: 2rem;
-            color: #C0392B;
-            font-weight: 900;
+        /* PICS 與表單樣式 */
+        .pics-box {
+            background: #FAFAFA; border: 1px solid #E0E0E0; padding: 20px; border-radius: 10px;
+            font-size: 0.9rem; text-align: justify; line-height: 1.6; color: #616161; margin-bottom: 20px;
+            height: 150px; overflow-y: auto;
         }
         
-        .result-discipline {
-            font-size: 1.2rem;
-            color: #E67E22;
-            font-weight: bold;
-            margin-bottom: 20px;
-            background: #FFF;
-            display: inline-block;
-            padding: 5px 20px;
-            border-radius: 30px;
+        .form-group { text-align: left; margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #4E342E; font-size: 0.95rem;}
+        .form-control {
+            width: 100%; padding: 12px; font-size: 1rem; border: 2px solid #FFE0B2;
+            border-radius: 10px; outline: none; box-sizing: border-box; font-family: inherit;
         }
-
-        .result-desc {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
-
-        .highlight-box {
-            background: #FFFFFF;
-            border-left: 6px solid var(--accent-color);
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #D35400;
-            text-align: left;
-            margin-bottom: 25px;
-        }
-
-        .record-form {
-            background: #FFFFFF;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .name-input {
-            width: 80%;
-            max-width: 300px;
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: 2px solid #FFE0B2;
-            border-radius: 25px;
-            outline: none;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .name-input:focus {
-            border-color: var(--accent-color);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+        .form-control:focus { border-color: var(--accent-color); background: #FFF9F2; }
+        
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- 首頁 -->
     <div id="intro" class="section active">
         <h1>2026 航空學分特訓基地</h1>
         <div class="subtitle">✨ 未來機組人員相性測驗 ✨</div>
@@ -225,12 +112,14 @@
         <button class="btn" onclick="startQuiz()">開始測驗</button>
     </div>
 
+    <!-- 測驗頁面 -->
     <div id="quiz" class="section">
         <div id="question-progress" style="text-align: left; color: #E67E22; margin-bottom: 15px; font-weight: 900;"></div>
         <div class="question-text" id="question-text"></div>
         <div class="options-container" id="options-container"></div>
     </div>
 
+    <!-- 結果頁面 -->
     <div id="result" class="section">
         <h1 style="font-size: 1.8rem; color: #5D4037;">你的專屬航空職人命格是...</h1>
         <div class="result-card">
@@ -238,22 +127,108 @@
             <div class="result-title" id="result-title"></div>
             <div class="result-discipline" id="result-discipline"></div>
             <div class="result-desc" id="result-desc"></div>
-            <div class="highlight-box" id="result-highlight"></div>
-
-            <div class="record-form">
-                <p style="margin-top: 0; font-weight: bold; color: #5D4037;">📝 登記測試記錄（可選）</p>
-                <input type="text" id="user-name" class="name-input" placeholder="請輸入姓名 / 暱稱 (可留空)">
-                <br>
-                <button class="btn" id="submit-btn" onclick="submitRecord()">提交記錄 📤</button>
-                <div id="status-msg" style="margin-top: 10px; font-weight: bold; font-size: 0.95rem;"></div>
-            </div>
         </div>
-        <br>
-        <button class="btn" onclick="location.reload()">再測一次 🔄</button>
+        <div style="margin-top: 30px; padding: 20px; background: #FFF3E0; border-radius: 15px;">
+            <h3 style="margin-top: 0; color: #D35400;">想保留測驗記錄及收取活動資訊嗎？</h3>
+            <p style="font-size: 0.95rem; color: #5D4037; margin-bottom: 20px;">填寫登記表，我們將會把詳細測驗結果 Email 俾你，並為你預留開放日最新資訊！</p>
+            <button class="btn" onclick="showSection('pics-section')">馬上登記並獲取結果 💌</button>
+            <br>
+            <button class="btn btn-outline" onclick="location.reload()" style="margin-top: 10px; font-size: 0.9rem; padding: 10px 20px;">不了，重新測驗</button>
+        </div>
     </div>
+
+    <!-- PICS 聲明頁面 -->
+    <div id="pics-section" class="section">
+        <h2 style="color: var(--primary-color);">收集個人資料聲明</h2>
+        <div class="pics-box">
+            <strong>個人資料收集聲明 (Personal Information Collection Statement)</strong><br><br>
+            根據香港特別行政區《個人資料（私隱）條例》（第486章），請閣下在提供個人資料前細閱本聲明。<br><br>
+            1. <strong>收集目的</strong>：本表格所收集的個人資料將嚴格保密，並僅用於發送測驗結果、處理開放日之登記、發送相關升學資訊及作內部統計之用。<br>
+            2. <strong>資料轉交</strong>：除非獲得您的明確同意，或按法律規定，否則我們絕對不會將您的個人資料轉交或出售予第三方。<br>
+            3. <strong>查閱及更正權利</strong>：根據條例，您有權要求查閱及更正您的個人資料。如需行使有關權利，請與我們的資料保障主任聯絡。
+        </div>
+        <div style="text-align: left; margin-bottom: 25px;">
+            <input type="checkbox" id="pics-agree" onchange="toggleFormBtn()" style="transform: scale(1.3); margin-right: 10px;">
+            <label for="pics-agree" style="font-weight: bold; color: #4E342E; cursor: pointer;">我已閱讀並同意上述收集個人資料聲明</label>
+        </div>
+        <button class="btn btn-outline" onclick="showSection('result')">返回</button>
+        <button class="btn" id="btn-to-form" onclick="showSection('form-section')" disabled>下一步</button>
+    </div>
+
+    <!-- 登記表單頁面 -->
+    <div id="form-section" class="section">
+        <h2 style="color: var(--primary-color);">登記開放日及收取結果</h2>
+        <div style="background: #FAFAFA; padding: 25px; border-radius: 15px; border: 1px solid #FFE0B2;">
+            
+            <div class="form-group">
+                <label>1. 中文/英文全名 (Full Name) *</label>
+                <input type="text" id="f-name" class="form-control" placeholder="例如：陳大文 / Chan Tai Man" required>
+            </div>
+            
+            <div class="form-group">
+                <label>2. 聯絡電話 (Contact Number) *</label>
+                <input type="tel" id="f-phone" class="form-control" placeholder="例如：98765432" required>
+            </div>
+
+            <div class="form-group">
+                <label>3. 電郵地址 (Email Address) *</label>
+                <input type="email" id="f-email" class="form-control" placeholder="用於接收測試結果" required>
+            </div>
+
+            <div class="form-group">
+                <label>4. 現就讀學校名稱 (Current School Name) *</label>
+                <input type="text" id="f-school" class="form-control" placeholder="輸入學校全名" required>
+            </div>
+
+            <div class="form-group">
+                <label>5. 現就讀年級 (Current Grade/Form) *</label>
+                <select id="f-grade" class="form-control" required>
+                    <option value="" disabled selected>請選擇...</option>
+                    <option value="中一 (S1)">中一 (S1)</option>
+                    <option value="中二 (S2)">中二 (S2)</option>
+                    <option value="中三 (S3)">中三 (S3)</option>
+                    <option value="中四 (S4)">中四 (S4)</option>
+                    <option value="中五 (S5)">中五 (S5)</option>
+                    <option value="中六 (S6)">中六 (S6)</option>
+                    <option value="其他 (Others)">其他 (Others)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>6. 得知開放日的途徑 (How did you know about us?) *</label>
+                <select id="f-source" class="form-control" required>
+                    <option value="" disabled selected>請選擇...</option>
+                    <option value="社交媒體 (IG/FB)">社交媒體 (Instagram / Facebook)</option>
+                    <option value="學校老師/海報介紹">學校老師/海報介紹</option>
+                    <option value="親友介紹">親友介紹</option>
+                    <option value="學校網頁">學校官方網頁</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+            
+            <div id="status-msg" style="margin-bottom: 15px; font-weight: bold; font-size: 1rem;"></div>
+            <button class="btn btn-outline" onclick="showSection('pics-section')" style="margin-right: 10px;">上一步</button>
+            <button class="btn" id="submit-btn" onclick="submitForm()">確認遞交 📤</button>
+        </div>
+    </div>
+
+    <!-- 最終感謝頁面 -->
+    <div id="thankyou" class="section">
+        <div style="font-size: 5rem; margin-bottom: 20px;">🎉 ✈️</div>
+        <h1 style="color: #27AE60; font-size: 2.2rem;">登記成功，感謝你的參與！</h1>
+        <p style="font-size: 1.1rem; color: #5D4037; line-height: 1.8; margin-top: 20px;">
+            你的資料已成功提交。<br>
+            測驗結果已發送至你的電郵信箱（如未收到請檢查垃圾郵件匣）。<br><br>
+            期待在未來的航空學分特訓基地見到你！
+        </p>
+        <br>
+        <button class="btn" onclick="location.reload()">回到首頁</button>
+    </div>
+
 </div>
 
 <script>
+    // ⚠️ 請確保這是你的 Google Apps Script Web App URL
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXQSeuHPvHPNNeWJ5mM5dp9y6Mxh_eCR5HAk1085yPbfN7_U5XF5n5IXgre2pd4saBPw/exec";
 
     const questions = [
@@ -300,22 +275,19 @@
             illustration: "👩‍✈️ ☕ ✨",
             title: "【空服極限 Carry 俠】",
             discipline: "(航空機艙及客運服務)",
-            desc: "天生具備神級的情商(EQ)與讀心術！就算遇到瘋狂投訴的奧客，你都能面帶微笑、優雅地用一杯熱茶化解危機。在空中飛行的世界裡，你就是全機乘客的安全感來源。",
-            highlight: "💡 Programme Code: BA114057\n想體驗模擬機艙實習？這科就是你的首選！"
+            desc: "天生具備神級的情商(EQ)與讀心術！就算遇到瘋狂投訴的奧客，你都能面帶微笑、優雅地用一杯熱茶化解危機。在空中飛行的世界裡，你就是全機乘客的安全感來源。"
         },
         "B": {
             illustration: "🏢 🎧 🧠",
             title: "【上帝視角：塔台指揮官】",
             discipline: "(機場營運管理)",
-            desc: "天生自帶超強大腦與抗壓能力！擅長在混亂中理出頭緒，就算機場有 100 班航機同時起降、天氣突變，你都能冷靜調度。你是掌控整個機場運作的核心大腦。",
-            highlight: "💡 Programme Code: BA114107\n想學習世界級機場的營運與危機處理？來這裡就對了。"
+            desc: "天生自帶超強大腦與抗壓能力！擅長在混亂中理出頭緒，就算機場有 100 班航機同時起降、天氣突變，你都能冷靜調度。你是掌控整個機場運作的核心大腦。"
         },
         "C": {
             illustration: "📦 🌍 🚚",
             title: "【環球物資傳送門】",
             discipline: "(航空及物流)",
-            desc: "擁有最強的空間感與時間管理能力！網購的iPhone 點樣最快由工廠送到你手上？疫苗點樣在低溫下安全跨國運送？全靠你的精準計算。你是鏈接全球經濟的幕後黑手。",
-            highlight: "💡 Programme Code: BA114056\n結合大數據與全球供應鏈，是全港極缺人才的高薪行業！"
+            desc: "擁有最強的空間感與時間管理能力！網購的iPhone 點樣最快由工廠送到你手上？疫苗點樣在低溫下安全跨國運送？全靠你的精準計算。你是鏈接全球經濟的幕後黑手。"
         },
         "D": {
             illustration: "🗺️ 🚅 🏙️",
@@ -333,6 +305,7 @@
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
         setTimeout(() => {
             document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0); // 切換頁面時回到頂部
         }, 50);
     }
 
@@ -407,41 +380,62 @@
         document.getElementById('result-title').innerText = currentResult.title;
         document.getElementById('result-discipline').innerText = currentResult.discipline;
         document.getElementById('result-desc').innerText = currentResult.desc;
-        document.getElementById('result-highlight').innerText = currentResult.highlight;
         
         showSection('result');
     }
 
-    function submitRecord() {
-        const userName = document.getElementById('user-name').value.trim();
+    function toggleFormBtn() {
+        const isChecked = document.getElementById('pics-agree').checked;
+        document.getElementById('btn-to-form').disabled = !isChecked;
+    }
+
+    function submitForm() {
+        // 取得表單資料
+        const name = document.getElementById('f-name').value.trim();
+        const phone = document.getElementById('f-phone').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const school = document.getElementById('f-school').value.trim();
+        const grade = document.getElementById('f-grade').value;
+        const source = document.getElementById('f-source').value;
+
+        // 簡單驗證
+        if (!name || !phone || !email || !school || !grade || !source) {
+            alert("請填妥所有帶 * 號的必填欄位！");
+            return;
+        }
+
         const statusMsg = document.getElementById('status-msg');
         const submitBtn = document.getElementById('submit-btn');
 
         submitBtn.disabled = true;
         statusMsg.style.color = "#E67E22";
-        statusMsg.innerText = "正在傳送資料...";
+        statusMsg.innerText = "正在傳送資料及寄送電郵，請稍候...";
 
-        const payload = {
-            name: userName || "匿名玩家",
-            title: currentResult.title,
-            discipline: currentResult.discipline
-        };
+        // 整理傳送資料
+        const formData = new URLSearchParams();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('school', school);
+        formData.append('grade', grade);
+        formData.append('source', source);
+        formData.append('title', currentResult.title);
+        formData.append('discipline', currentResult.discipline);
+        formData.append('desc', currentResult.desc); // 傳送測驗描述以放入 Email
 
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: formData
         })
         .then(() => {
-            statusMsg.style.color = "#27AE60";
-            statusMsg.innerText = "✅ 記錄已成功上傳資料庫！";
-            submitBtn.innerText = "已提交";
+            // 跳轉至感謝頁面
+            showSection('thankyou');
         })
         .catch(error => {
             console.error('Error:', error);
             statusMsg.style.color = "#C0392B";
-            statusMsg.innerText = "❌ 傳送失敗，請稍後再試。";
+            statusMsg.innerText = "❌ 傳送失敗，請檢查網絡後再試。";
             submitBtn.disabled = false;
         });
     }
