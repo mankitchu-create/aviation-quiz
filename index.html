@@ -556,6 +556,69 @@
             color: #FFFFFF;
         }
 
+        .qr-section-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .qr-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .qr-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .qr-card-title {
+            color: #FFFFFF;
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+        }
+
+        .qr-image-wrapper {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .qr-image-wrapper img {
+            width: 145px;
+            height: 145px;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .qr-hint-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
         .checkbox-container {
             display: flex;
             align-items: flex-start;
@@ -799,6 +862,33 @@
             <div style="text-align: left; margin-bottom: 18px;">
                 <div class="hud-badge" style="margin-bottom: 10px;">PRIVACY POLICY STATEMENT</div>
                 <h2 style="font-size: 1.45rem; font-weight: 800;">收集個人資料聲明 (PICS)</h2>
+            </div>
+
+            <!-- QR Code Direct Access Cards -->
+            <div class="qr-section-container">
+                <!-- Chinese Policy QR Card -->
+                <a href="https://www.vtc.edu.hk/tc/home/privacy.html" target="_blank" rel="noopener noreferrer" class="qr-card">
+                    <div class="qr-card-title">VTC 私隱政策聲明</div>
+                    <div class="qr-image-wrapper">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=4&data=https%3A%2F%2Fwww.vtc.edu.hk%2Ftc%2Fhome%2Fprivacy.html" alt="VTC 私隱政策聲明 QR Code (中文版)">
+                    </div>
+                    <div class="qr-hint-btn">
+                        <span>點擊或掃描開啟 (中文)</span>
+                        <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
+                    </div>
+                </a>
+
+                <!-- English Policy QR Card -->
+                <a href="https://www.vtc.edu.hk/en/home/privacy.html" target="_blank" rel="noopener noreferrer" class="qr-card">
+                    <div class="qr-card-title">VTC Privacy Policy Statement</div>
+                    <div class="qr-image-wrapper">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=4&data=https%3A%2F%2Fwww.vtc.edu.hk%2Fen%2Fhome%2Fprivacy.html" alt="VTC Privacy Policy Statement QR Code (English)">
+                    </div>
+                    <div class="qr-hint-btn">
+                        <span>Tap or Scan to Open (EN)</span>
+                        <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
+                    </div>
+                </a>
             </div>
             
             <div class="pics-box">
