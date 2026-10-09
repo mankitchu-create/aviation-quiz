@@ -4,442 +4,1183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 航空學分特訓基地：未來機組人員相性測驗</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
+    <style>
         :root {
-            --primary-color: #D35400;
-            --accent-color: #FF7E5F;
-            --bg-gradient: linear-gradient(135deg, #FFF3E0 0%, #FFEFBA 100%);
-            --card-bg: #FFFFFF;
-            --text-color: #5D4037;
+            --bg-base: #070D18;
+            --surface-glass: rgba(10, 20, 36, 0.48);
+            --surface-card: rgba(18, 30, 52, 0.50);
+            --border-glass: rgba(255, 255, 255, 0.16);
+            --primary: #3B82F6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-gold: #F59E0B;
+            --accent-gold-glow: rgba(245, 158, 11, 0.35);
+            --accent-cyan: #06B6D4;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --text-sub: #CBD5E1;
+            --success: #10B981;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', -apple-system, sans-serif;
+            background-color: var(--bg-base);
+            background-image: 
+                linear-gradient(140deg, rgba(7, 13, 24, 0.52) 0%, rgba(10, 21, 37, 0.46) 50%, rgba(7, 13, 24, 0.58) 100%),
+                url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2074&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            padding: 24px 16px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.22;
+            animation: pulseOrb 12s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, #1E3A8A 0%, rgba(30, 58, 138, 0) 70%);
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, #D97706 0%, rgba(217, 119, 6, 0) 70%);
+            bottom: -15%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, #06B6D4 0%, rgba(6, 182, 212, 0) 70%);
+            top: 35%;
+            left: 65%;
+            opacity: 0.2;
+        }
+
+        @keyframes pulseOrb {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.15) translate(30px, -25px); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .container {
-            width: 90%;
-            max-width: 800px;
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(211, 84, 0, 0.15);
+            width: 100%;
+            max-width: 820px;
+            background: var(--surface-glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-glass);
+            border-radius: 32px;
+            padding: 40px 32px;
+            box-shadow: 
+                0 25px 60px -15px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transform: translateY(-16px) !important;
+        }
+
+        .hud-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-glass);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .hud-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent-gold);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .radar-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-gold);
+            animation: radarBlink 1.6s infinite ease-in-out;
+        }
+
+        @keyframes radarBlink {
+            0%, 100% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .hero-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            background: linear-gradient(135deg, #FFFFFF 30%, #93C5FD 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
             text-align: center;
+        }
+
+        .hero-subtitle {
+            text-align: center;
+            color: var(--accent-gold);
+            font-size: 1.02rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .intro-graphic {
+            width: 84px;
+            height: 84px;
+            margin: 16px auto 22px auto;
+            border-radius: 26px;
+            background: linear-gradient(145deg, rgba(37, 99, 235, 0.25), rgba(245, 158, 11, 0.15));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-desc {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 25px var(--primary-glow);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 35px var(--primary-glow);
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        }
+
+        .btn-primary:disabled {
+            background: #334155;
+            color: #64748B;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            border-color: transparent;
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-sub);
+            border: 1px solid var(--border-glass);
+            padding: 13px 24px;
+            font-size: 0.94rem;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .progress-wrapper {
+            margin-bottom: 26px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2563EB, #F59E0B);
+            border-radius: 99px;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 12px var(--accent-gold-glow);
+        }
+
+        .question-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-size: 0.86rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .option-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 22px;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
             position: relative;
             overflow: hidden;
-            border: 3px solid #FFE0B2;
-            margin: 20px 0;
         }
 
-        h1 { color: var(--primary-color); font-weight: 900; margin-bottom: 10px; }
-        .subtitle { color: #E67E22; margin-bottom: 30px; font-weight: 700; font-size: 1.2rem; }
-
-        .btn {
-            background: linear-gradient(45deg, #FF7E5F, #FEB47B); color: white;
-            border: none; padding: 15px 35px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4); margin: 5px;
+        .option-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: transparent;
+            transition: all 0.3s ease;
         }
-        .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 25px rgba(255, 126, 95, 0.6); }
-        .btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; }
-        
-        .btn-outline {
-            background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color);
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
         }
-        .btn-outline:hover { background: #FFF3E0; }
 
-        .options-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
-        .option {
-            background-color: #FAFAFA; border: 2px solid #FFE0B2; padding: 20px;
-            border-radius: 15px; text-align: left; cursor: pointer; transition: all 0.4s ease;
-            font-size: 1.05rem; line-height: 1.6;
+        .option-item:hover::before {
+            background: var(--primary);
         }
-        .option:hover { border-color: var(--accent-color); background-color: #FFF9F2; transform: translateX(10px); }
-        .option.selected { background: linear-gradient(120deg, #FF7E5F, #FEB47B); color: white; border-color: transparent; transform: scale(1.02); pointer-events: none; }
 
-        .question-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: #C0392B; text-align: left; }
+        .option-item.selected {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(245, 158, 11, 0.15) 100%);
+            border-color: var(--accent-gold);
+            transform: scale(1.015);
+            pointer-events: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
 
-        .section { display: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(20px); }
-        .section.active { display: block; opacity: 1; transform: translateY(0); }
-        .fade-out { opacity: 0 !important; transform: translateY(-20px) !important; }
+        .option-item.selected::before {
+            background: var(--accent-gold);
+        }
 
-        .result-card { background: linear-gradient(135deg, #FFF9F2 0%, #FFE0B2 100%); padding: 30px; border-radius: 20px; margin-top: 20px; border: 2px dashed #FFB74D; }
-        .illustration-box { font-size: 4.5rem; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
-        .result-title { font-size: 2rem; color: #C0392B; font-weight: 900; }
-        .result-discipline { font-size: 1.2rem; color: #E67E22; font-weight: bold; margin-bottom: 20px; background: #FFF; display: inline-block; padding: 5px 20px; border-radius: 30px; }
-        .result-desc { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
+        .option-id {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text-sub);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
 
-        /* PICS 與表單樣式 */
+        .option-item:hover .option-id {
+            color: #FFFFFF;
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+
+        .option-item.selected .option-id {
+            background: var(--accent-gold);
+            color: #070D18;
+            border-color: var(--accent-gold);
+        }
+
+        .option-label {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-sub);
+            transition: color 0.3s ease;
+        }
+
+        .option-item:hover .option-label {
+            color: #FFFFFF;
+        }
+
+        .option-item.selected .option-label {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .boarding-pass {
+            background: linear-gradient(160deg, rgba(19, 34, 56, 0.52) 0%, rgba(13, 22, 38, 0.62) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .pass-header {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .pass-body {
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .pass-badge-icon {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 18px auto;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(59, 130, 246, 0.2));
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            box-shadow: 0 10px 30px var(--accent-gold-glow);
+        }
+
+        .pass-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .pass-discipline {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.18);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #93C5FD;
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 0.03em;
+        }
+
+        .pass-desc {
+            color: var(--text-sub);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 580px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        .pass-footer {
+            padding: 14px 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
         .pics-box {
-            background: #FAFAFA; border: 1px solid #E0E0E0; padding: 20px; border-radius: 10px;
-            font-size: 0.9rem; text-align: justify; line-height: 1.6; color: #616161; margin-bottom: 20px;
-            height: 150px; overflow-y: auto;
+            background: rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 22px;
+            border-radius: 18px;
+            font-size: 0.88rem;
+            text-align: justify;
+            line-height: 1.8;
+            color: var(--text-sub);
+            margin-bottom: 22px;
+            max-height: 250px;
+            overflow-y: auto;
         }
-        
-        .form-group { text-align: left; margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #4E342E; font-size: 0.95rem;}
+
+        .pics-box strong {
+            color: #FFFFFF;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 18px;
+            border-radius: 16px;
+            transition: all 0.25s ease;
+        }
+
+        .checkbox-container:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            margin-top: 2px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 6px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox.checked {
+            background: var(--accent-gold);
+        }
+
+        .custom-checkbox.checked::after {
+            content: '✓';
+            color: #070D18;
+            font-weight: 900;
+            font-size: 0.85rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 26px 18px;
+            }
+            .hero-title {
+                font-size: 1.7rem;
+            }
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.86rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-sub);
+            letter-spacing: 0.02em;
+        }
+
         .form-control {
-            width: 100%; padding: 12px; font-size: 1rem; border: 2px solid #FFE0B2;
-            border-radius: 10px; outline: none; box-sizing: border-box; font-family: inherit;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            padding: 13px 16px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.25s ease;
         }
-        .form-control:focus { border-color: var(--accent-color); background: #FFF9F2; }
-        
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.1em;
+            padding-right: 2.5rem;
+        }
+
+        select.form-control option {
+            background-color: #0F172A;
+            color: #FFFFFF;
+        }
+
+        .status-box {
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- 首頁 -->
-    <div id="intro" class="section active">
-        <h1>2026 航空學分特訓基地</h1>
-        <div class="subtitle">✨ 未來機組人員相性測驗 ✨</div>
-        <div style="font-size: 4rem; margin-bottom: 10px;">✈️ ☁️ 🧳</div>
-        <p style="margin-bottom: 30px; line-height: 1.8; color: #6D4C41; font-weight: bold;">
-            你擁有哪一種隱藏的航空天賦？<br>
-            透過 4 條日常情境題，測出你最終的「航空職人命格」！
-        </p>
-        <button class="btn" onclick="startQuiz()">開始測驗</button>
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
     </div>
+    <div class="grid-overlay"></div>
 
-    <!-- 測驗頁面 -->
-    <div id="quiz" class="section">
-        <div id="question-progress" style="text-align: left; color: #E67E22; margin-bottom: 15px; font-weight: 900;"></div>
-        <div class="question-text" id="question-text"></div>
-        <div class="options-container" id="options-container"></div>
-    </div>
+    <div class="container">
+        <!-- Top HUD Status -->
+        <div class="hud-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="plane-takeoff" style="width: 16px; height: 16px; color: var(--primary);"></i>
+                <span>FLIGHT CADET 2026 // APTITUDE RADAR</span>
+            </div>
+            <div class="hud-badge">
+                <span class="radar-dot"></span>
+                <span>SYSTEM ONLINE</span>
+            </div>
+        </div>
 
-    <!-- 結果頁面 -->
-    <div id="result" class="section">
-        <h1 style="font-size: 1.8rem; color: #5D4037;">你的專屬航空職人命格是...</h1>
-        <div class="result-card">
-            <div class="illustration-box" id="result-illustration"></div>
-            <div class="result-title" id="result-title"></div>
-            <div class="result-discipline" id="result-discipline"></div>
-            <div class="result-desc" id="result-desc"></div>
+        <!-- Section 1: Intro -->
+        <div id="intro" class="section active">
+            <div class="intro-graphic">
+                <i data-lucide="compass" style="width: 42px; height: 42px;"></i>
+            </div>
+            <h1 class="hero-title">航空學分特訓基地</h1>
+            <div class="hero-subtitle">
+                <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
+                未來機組人員相性測驗
+            </div>
+            <p class="hero-desc">
+                探索你未被發掘的航空天賦。透過 4 道精準情境決策題，即時解密你最契合的專屬民航職人命格與專業升學路徑！
+            </p>
+            <div style="text-align: center;">
+                <button class="btn-primary" onclick="startQuiz()">
+                    <span>啟動測驗序列</span>
+                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
         </div>
-        <div style="margin-top: 30px; padding: 20px; background: #FFF3E0; border-radius: 15px;">
-            <h3 style="margin-top: 0; color: #D35400;">想保留測驗記錄及收取活動資訊嗎？</h3>
-            <p style="font-size: 0.95rem; color: #5D4037; margin-bottom: 20px;">填寫登記表，我們將會把詳細測驗結果 Email 俾你，並為你預留開放日最新資訊！</p>
-            <button class="btn" onclick="showSection('pics-section')">馬上登記並獲取結果 💌</button>
-            <br>
-            <button class="btn btn-outline" onclick="location.reload()" style="margin-top: 10px; font-size: 0.9rem; padding: 10px 20px;">不了，重新測驗</button>
-        </div>
-    </div>
 
-    <!-- PICS 聲明頁面 -->
-    <div id="pics-section" class="section">
-        <h2 style="color: var(--primary-color);">收集個人資料聲明</h2>
-        <div class="pics-box">
-            <strong>個人資料收集聲明 (Personal Information Collection Statement)</strong><br><br>
-            根據香港特別行政區《個人資料（私隱）條例》（第486章），請閣下在提供個人資料前細閱本聲明。<br><br>
-            1. <strong>收集目的</strong>：本表格所收集的個人資料將嚴格保密，並僅用於發送測驗結果、處理開放日之登記、發送相關升學資訊及作內部統計之用。<br>
-            2. <strong>資料轉交</strong>：除非獲得您的明確同意，或按法律規定，否則我們絕對不會將您的個人資料轉交或出售予第三方。<br>
-            3. <strong>查閱及更正權利</strong>：根據條例，您有權要求查閱及更正您的個人資料。如需行使有關權利，請與我們的資料保障主任聯絡。
-        </div>
-        <div style="text-align: left; margin-bottom: 25px;">
-            <input type="checkbox" id="pics-agree" onchange="toggleFormBtn()" style="transform: scale(1.3); margin-right: 10px;">
-            <label for="pics-agree" style="font-weight: bold; color: #4E342E; cursor: pointer;">我已閱讀並同意上述收集個人資料聲明</label>
-        </div>
-        <button class="btn btn-outline" onclick="showSection('result')">返回</button>
-        <button class="btn" id="btn-to-form" onclick="showSection('form-section')" disabled>下一步</button>
-    </div>
+        <!-- Section 2: Quiz -->
+        <div id="quiz" class="section">
+            <div class="progress-wrapper">
+                <div class="progress-meta">
+                    <span id="question-progress" style="font-weight: 700; color: #FFFFFF;">PROGRESS: 1 / 4</span>
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <i data-lucide="activity" style="width: 14px; height: 14px; color: var(--accent-gold);"></i>
+                        CADET TELEMETRY
+                    </span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
 
-    <!-- 登記表單頁面 -->
-    <div id="form-section" class="section">
-        <h2 style="color: var(--primary-color);">登記開放日及收取結果</h2>
-        <div style="background: #FAFAFA; padding: 25px; border-radius: 15px; border: 1px solid #FFE0B2;">
+            <div class="question-badge">
+                <i data-lucide="radio" style="width: 14px; height: 14px;"></i>
+                <span>SITUATION ANALYSIS</span>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="options-container" id="options-container"></div>
+        </div>
+
+        <!-- Section 3: Boarding Pass Result -->
+        <div id="result" class="section">
+            <div class="boarding-pass">
+                <div class="pass-header">
+                    <span>BOARDING PASS // FLIGHT CADET 2026</span>
+                    <span style="color: var(--accent-gold);">SECTOR: ASIA-PACIFIC</span>
+                </div>
+                <div class="pass-body">
+                    <div class="pass-badge-icon" id="result-icon-box">
+                        <i data-lucide="award" style="width: 40px; height: 40px;" id="result-badge-icon"></i>
+                    </div>
+                    <div class="pass-title" id="result-title"></div>
+                    <div class="pass-discipline" id="result-discipline"></div>
+                    <div class="pass-desc" id="result-desc"></div>
+                </div>
+                <div class="pass-footer">
+                    <span>CALLSIGN: HK-CADET-2026</span>
+                    <span style="color: #93C5FD;">STATUS: CERTIFIED</span>
+                </div>
+            </div>
+
+            <!-- Follow-up Prompt Card -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); border-radius: 20px; padding: 24px; text-align: center;">
+                <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 8px; font-weight: 700;">想保留測驗結果及獲取活動資訊？</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; max-width: 520px; margin-left: auto; margin-right: auto;">
+                    完成登記即可將完整評估證書發送至指定電子信箱，並優先預留航空特訓基地開放日活動名額！
+                </p>
+                <div class="action-row">
+                    <button class="btn-primary" onclick="showSection('pics-section')">
+                        <i data-lucide="mail-check" style="width: 18px; height: 18px;"></i>
+                        <span>登錄資料並獲取電郵報告 💌</span>
+                    </button>
+                    <button class="btn-outline" onclick="location.reload()">
+                        <i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+                        <span>重新測驗</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: PICS Statement -->
+        <div id="pics-section" class="section">
+            <div style="text-align: left; margin-bottom: 18px;">
+                <div class="hud-badge" style="margin-bottom: 10px;">PRIVACY POLICY STATEMENT</div>
+                <h2 style="font-size: 1.45rem; font-weight: 800;">收集個人資料聲明 (PICS)</h2>
+            </div>
             
-            <div class="form-group">
-                <label>1. 中文/英文全名 (Full Name) *</label>
-                <input type="text" id="f-name" class="form-control" placeholder="例如：陳大文 / Chan Tai Man" required>
-            </div>
-            
-            <div class="form-group">
-                <label>2. 聯絡電話 (Contact Number) *</label>
-                <input type="tel" id="f-phone" class="form-control" placeholder="例如：98765432" required>
-            </div>
-
-            <div class="form-group">
-                <label>3. 電郵地址 (Email Address) *</label>
-                <input type="email" id="f-email" class="form-control" placeholder="用於接收測試結果" required>
-            </div>
-
-            <div class="form-group">
-                <label>4. 現就讀學校名稱 (Current School Name) *</label>
-                <input type="text" id="f-school" class="form-control" placeholder="輸入學校全名" required>
-            </div>
-
-            <div class="form-group">
-                <label>5. 現就讀年級 (Current Grade/Form) *</label>
-                <select id="f-grade" class="form-control" required>
-                    <option value="" disabled selected>請選擇...</option>
-                    <option value="中一 (S1)">中一 (S1)</option>
-                    <option value="中二 (S2)">中二 (S2)</option>
-                    <option value="中三 (S3)">中三 (S3)</option>
-                    <option value="中四 (S4)">中四 (S4)</option>
-                    <option value="中五 (S5)">中五 (S5)</option>
-                    <option value="中六 (S6)">中六 (S6)</option>
-                    <option value="其他 (Others)">其他 (Others)</option>
-                </select>
+            <div class="pics-box">
+                <p style="margin-bottom: 14px;">
+                    <strong>VTC 及其機構成員</strong>只有在獲得閣下的同意（請參閱下方的同意剔選方格）的情況下，將閣下的個人資料用於發送課程、招生及活動推廣資訊。若未經上述同意，閣下的資料不會用於以上用途。
+                </p>
+                <p style="margin-bottom: 14px;">
+                    本人明白本人可以隨時撤回此項同意（請參閱下方聯絡資料）。
+                </p>
+                <p style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px dashed rgba(255, 255, 255, 0.15);">
+                    如閣下日後希望停止接收上述資訊，或更改個人資料，請連同閣下已登記的姓名、手機號碼、電郵地址及教育程度資料（如適用），電郵至 <a href="mailto:ty-ba@vtc.edu.hk" style="color: var(--accent-cyan); text-decoration: underline;">ty-ba@vtc.edu.hk</a> 或傳真至 <strong>2434 5703</strong>。
+                </p>
+                <p style="margin-bottom: 14px; color: var(--text-muted); font-size: 0.82rem;">
+                    <strong>VTC and its member institutions</strong> may use your personal data for providing marketing and promotional information in relation to any programmes, admission and events offered by VTC and its member institutions only if you have given your consent (see the consent checkbox below). Without such consent, your data will not be used for the above purposes.
+                </p>
+                <p style="margin-bottom: 14px; color: var(--text-muted); font-size: 0.82rem;">
+                    I understand that I may withdraw this consent at any time (see contact details below).
+                </p>
+                <p style="margin-bottom: 0; color: var(--text-muted); font-size: 0.82rem;">
+                    If you would like to unsubscribe from receiving the said information or update your personal data, please send your request with registered name, mobile number, email address and educational level (if applicable) to <a href="mailto:ty-ba@vtc.edu.hk" style="color: var(--accent-cyan); text-decoration: underline;">ty-ba@vtc.edu.hk</a> or by fax to <strong>2434 5703</strong>.
+                </p>
             </div>
 
-            <div class="form-group">
-                <label>6. 得知開放日的途徑 (How did you know about us?) *</label>
-                <select id="f-source" class="form-control" required>
-                    <option value="" disabled selected>請選擇...</option>
-                    <option value="社交媒體 (IG/FB)">社交媒體 (Instagram / Facebook)</option>
-                    <option value="學校老師/海報介紹">學校老師/海報介紹</option>
-                    <option value="親友介紹">親友介紹</option>
-                    <option value="學校網頁">學校官方網頁</option>
-                    <option value="其他">其他</option>
-                </select>
+            <div class="checkbox-container" onclick="toggleAgreement()">
+                <div class="custom-checkbox" id="pics-checkbox"></div>
+                <div style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.6;">
+                    <div style="font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">
+                        本人確認已閱讀並明白 VTC 的《私隱政策聲明》，本人同意 VTC 及其機構成員使用本人的個人資料，包括姓名、手機號碼、電郵地址、學校名稱、教育程度及有興趣的課程範疇，以提供有關 VTC 及其機構成員提供的任何課程、招生及活動的市場推廣宣傳資訊。
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;">
+                        I have read and understood VTC's Privacy Policy Statement, and I consent to VTC and its member institutions using my personal data, including my name, mobile number, email address, name of school, education level and programme preferences, for providing marketing and promotional information in relation to any programmes, admissions and events offered by VTC and its member institutions.
+                    </div>
+                </div>
             </div>
-            
-            <div id="status-msg" style="margin-bottom: 15px; font-weight: bold; font-size: 1rem;"></div>
-            <button class="btn btn-outline" onclick="showSection('pics-section')" style="margin-right: 10px;">上一步</button>
-            <button class="btn" id="submit-btn" onclick="submitForm()">確認遞交 📤</button>
+
+            <div class="action-row" style="justify-content: flex-start;">
+                <button class="btn-outline" onclick="showSection('result')">
+                    <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                    <span>返回測驗結果</span>
+                </button>
+                <button class="btn-primary" id="btn-to-form" onclick="showSection('form-section')" disabled>
+                    <span>確認並填寫登記</span>
+                    <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Section 5: Registration Form -->
+        <div id="form-section" class="section">
+            <div style="text-align: left; margin-bottom: 22px;">
+                <div class="hud-badge" style="margin-bottom: 10px;">CADET REGISTRATION</div>
+                <h2 style="font-size: 1.45rem; font-weight: 800;">登記開放日與獲取報告</h2>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>1. 中英文全名 (Full Name) *</label>
+                    <input type="text" id="f-name" class="form-control" placeholder="陳大文 / Chan Tai Man" required>
+                </div>
+
+                <div class="form-group">
+                    <label>2. 聯絡電話 (Contact Number) *</label>
+                    <input type="tel" id="f-phone" class="form-control" placeholder="9876 5432" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>3. 電子郵件 (Email Address) *</label>
+                    <input type="email" id="f-email" class="form-control" placeholder="用於接收測驗報告 (如: user@gmail.com)" required>
+                </div>
+
+                <div class="form-group">
+                    <label>4. 就讀學校名稱 (School Name) *</label>
+                    <input type="text" id="f-school" class="form-control" placeholder="中學全稱" required>
+                </div>
+
+                <div class="form-group">
+                    <label>5. 現就讀年級 (Current Grade) *</label>
+                    <select id="f-grade" class="form-control" required>
+                        <option value="" disabled selected>請選擇目前年級</option>
+                        <option value="中一 (S1)">中一 (S1)</option>
+                        <option value="中二 (S2)">中二 (S2)</option>
+                        <option value="中三 (S3)">中三 (S3)</option>
+                        <option value="中四 (S4)">中四 (S4)</option>
+                        <option value="中五 (S5)">中五 (S5)</option>
+                        <option value="中六 (S6)">中六 (S6)</option>
+                        <option value="其他 (Others)">其他 (Others)</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>6. 得知開放日之途徑 (Source) *</label>
+                    <select id="f-source" class="form-control" required>
+                        <option value="" disabled selected>請選擇獲知管道</option>
+                        <option value="社交媒體 (Instagram / Facebook)">社交媒體 (Instagram / Facebook)</option>
+                        <option value="學校老師 / 校內海報宣傳">學校老師 / 校內海報宣傳</option>
+                        <option value="親友推薦 / 同學介紹">親友推薦 / 同學介紹</option>
+                        <option value="官方網頁探索">官方網頁探索</option>
+                        <option value="其他途徑">其他途徑</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="status-box" class="status-box"></div>
+
+            <div class="action-row" style="justify-content: flex-start;">
+                <button class="btn-outline" onclick="showSection('pics-section')">
+                    <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                    <span>返回條款</span>
+                </button>
+                <button class="btn-primary" id="submit-btn" onclick="submitForm()">
+                    <span>確認遞交並發送報告</span>
+                    <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Section 6: Thank You Completion -->
+        <div id="thankyou" class="section" style="text-align: center; padding: 20px 0;">
+            <div style="width: 84px; height: 84px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--success); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; color: var(--success);">
+                <i data-lucide="check-circle-2" style="width: 44px; height: 44px;"></i>
+            </div>
+            <h1 style="font-size: 1.9rem; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">登記完成，感謝參與！</h1>
+            <p style="color: var(--text-sub); font-size: 1rem; line-height: 1.8; max-width: 520px; margin: 0 auto 28px auto;">
+                您的學員測試檔案已建立，詳細相性分析證書已自動發送至指定電子信箱。<br>
+                <span style="font-size: 0.88rem; color: var(--text-muted);">(若數分鐘內未收到，請查閱垃圾郵件匣或促銷標籤)</span>
+            </p>
+            <button class="btn-outline" onclick="location.reload()">
+                <i data-lucide="home" style="width: 16px; height: 16px;"></i>
+                <span>返回首頁</span>
+            </button>
         </div>
     </div>
 
-    <!-- 最終感謝頁面 -->
-    <div id="thankyou" class="section">
-        <div style="font-size: 5rem; margin-bottom: 20px;">🎉 ✈️</div>
-        <h1 style="color: #27AE60; font-size: 2.2rem;">登記成功，感謝你的參與！</h1>
-        <p style="font-size: 1.1rem; color: #5D4037; line-height: 1.8; margin-top: 20px;">
-            你的資料已成功提交。<br>
-            測驗結果已發送至你的電郵信箱（如未收到請檢查垃圾郵件匣）。<br><br>
-            期待在未來的航空學分特訓基地見到你！
-        </p>
-        <br>
-        <button class="btn" onclick="location.reload()">回到首頁</button>
-    </div>
+    <script>
+        // Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXQSeuHPvHPNNeWJ5mM5dp9y6Mxh_eCR5HAk1085yPbfN7_U5XF5n5IXgre2pd4saBPw/exec";
 
-</div>
+        const questions = [
+            {
+                text: "Q1. 放學時，你同班朋友去旺角食飯。出地鐵站嗰陣，突然發現其中一個朋友唔見咗，電話又無人聽。呢個時候，你第一時間會點做？",
+                options: [
+                    { id: "A", text: "主動安撫其他慌張嘅朋友，並提議去大家最常去嘅幾間店舖搵下，用溫暖同細心令大家冷靜落嚟。" },
+                    { id: "B", text: "叫大家留喺原地唔好亂走，自己立刻行去地鐵站客務中心，請職員廣播，並喺腦海迅速規劃最有效率嘅搵人路線。" },
+                    { id: "C", text: "開啟手機嘅「尋找朋友」或檢查邊個最後見過佢，計算時間同距離，推測佢最有可能卡喺邊個轉車站。" },
+                    { id: "D", text: "觀察地鐵站出口嘅人流方向同地圖，分析呢個站嘅人流盲點，判斷佢係咪行錯咗去其他連接商場嘅出口。" }
+                ]
+            },
+            {
+                text: "Q2. 學校年園遊會 (School Bazaar) 輪到你哋班擺攤位，大家推舉你做核心負責人。你最想負責以下邊個工作崗位？",
+                options: [
+                    { id: "A", text: "攤位前線嘅接待員兼 PR！著起班衫，用最親切嘅笑容同叫座力吸引全校師生過嚟幫襯，確保每位顧客都玩得開心。" },
+                    { id: "B", text: "現場總指揮！負責監督排隊人流、控制遊戲器材有冇故障，隨時處理現場突發情況 (例如有人打尖或排隊阻塞)。" },
+                    { id: "C", text: "後勤及物資採購官！精準計算要買幾多原材料、搵邊間批發最平、貨物點樣最快運到學校，確保攤位絕對唔會斷貨。" },
+                    { id: "D", text: "攤位總策劃師！負責研究全校攤位嘅分佈圖，分析邊個位置最好人流、設計最吸睛嘅攤位主題同長遠嘅宣傳策略。" }
+                ]
+            },
+            {
+                text: "Q3. 暑假你同屋企人或者朋友去海外自由行，由你負責編排全個行程。你嘅「排行程風格」最接近以下邊一種？",
+                options: [
+                    { id: "A", text: "精選當地最熱門嘅特色體驗、米芝蓮餐廳與隱世 Cafe，確保同行嘅所有人在每一刻都感到賓至如歸。" },
+                    { id: "B", text: "行程時間表精準但留有餘裕，所有景點之間的交通接駁方案必備 Backup Plan，極度注重行程穩健流暢。" },
+                    { id: "C", text: "行程動線絕對唔走回頭路！精確計算行李箱容量配額、紀念品直郵路徑，以最省時省力的方式抵達最多地點。" },
+                    { id: "D", text: "比起一般打卡點，更想體驗該城市獨特的立體交通路網（雙層軌道、跨海懸索、樞紐空港），分析其宏觀規劃。" }
+                ]
+            },
+            {
+                text: "Q4. 距離選科截止倒數計時，你發現自己尚有志願欄位待確認，你對未來的專業發展最大的期許是？",
+                options: [
+                    { id: "A", text: "修讀具備專業形象、高度人際互動、畢業後可於國際航線實習並接觸世界多元文化的客運服務專業。" },
+                    { id: "B", text: "掌握世界級地標（如頂尖國際機場樞紐）的全盤運籌指揮能力，享受於幕後調度千軍萬馬之成就感。" },
+                    { id: "C", text: "掌握跨國航運、跨境電商核心數據鏈與低溫特種物流技術，邁入高門檻、全球剛需的航空供應鏈管理。" },
+                    { id: "D", text: "擁有最廣闊的世界級宏觀視野，專注研究全球航權網絡、航空法規與大型運輸政策，成為未來交通樞紐智囊。" }
+                ]
+            }
+        ];
 
-<script>
-    // ⚠️ 請確保這是你的 Google Apps Script Web App URL
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXQSeuHPvHPNNeWJ5mM5dp9y6Mxh_eCR5HAk1085yPbfN7_U5XF5n5IXgre2pd4saBPw/exec";
+        const resultsData = {
+            "A": {
+                icon: "sparkles",
+                title: "【空服極限 Carry 俠】",
+                discipline: "航空機艙及客運服務 (Cabin & Passenger Services)",
+                desc: "天生具備神級的情商 (EQ) 與細膩讀心術！無論面對多麼緊急或挑剔的突發狀況，你總能保持沉著優雅、化解危機於無形。在萬呎高空的飛行世界中，你的敏銳直覺是整架飛機旅客最堅實的安心依託。"
+            },
+            "B": {
+                icon: "activity",
+                title: "【上帝視角：塔台指揮官】",
+                discipline: "機場營運管理 (Airport Operations Management)",
+                desc: "自帶強悍的抗壓大腦與大局視野！善於在最複雜的動態資訊中迅速理清脈絡。縱使面對跑道滿載、極端氣候突變或航班重整，你亦能冷靜調度全盤資源，是掌控整座超級機場順暢運轉的中樞靈魂。"
+            },
+            "C": {
+                icon: "boxes",
+                title: "【環球物資傳送門】",
+                discipline: "航空及物流管理 (Aviation & Logistics)",
+                desc: "擁有卓越的空間結構計算與時間運算天賦！全球最新科技產品如何隔夜跨洲抵達？特種醫藥物資如何精準冷鏈配送？背後全仰賴你近乎苛求的精密航線與裝載推演，是鏈結全球經濟動脈的頂尖專家。"
+            },
+            "D": {
+                icon: "map",
+                title: "【未來交通規劃大師】",
+                discipline: "航空服務及運輸學 (Aviation Services & Transport)",
+                desc: "具備高瞻遠矚的戰略格局與系統性思考能力。比起單一航點，你更熱衷於探討整座城市、空域航線網絡與多式聯運體系的深層佈局。未來的航空樞紐政策與世界交通格局，正是由你親手構建！"
+            }
+        };
 
-    const questions = [
-        {
-            text: "Q1. 放學時，你同班朋友去旺角食飯。出地鐵站嗰陣，突然發現其中一個朋友唔見咗，電話又無人聽。呢個時候，你第一時間會點做？",
-            options: [
-                { id: "A", text: "主動安撫其他慌張嘅朋友，並提議去大家最常去嘅幾間店舖搵下，用溫暖同細心令大家冷靜落嚟。" },
-                { id: "B", text: "叫大家留喺原地唔好亂走，自己立刻行去地鐵站客務中心，請職員廣播，並喺腦海迅速規劃最有效率嘅搵人路線。" },
-                { id: "C", text: "開啟手機嘅「尋找朋友」或檢查邊個最後見過佢，計算時間同距離，推測佢最有可能卡喺邊個轉車站。" },
-                { id: "D", text: "觀察地鐵站出口嘅人流方向同地圖，分析呢個站嘅人流盲點，判斷佢係咪行錯咗去其他連接商場嘅出口。" }
-            ]
-        },
-        {
-            text: "Q2. 學校年園遊會(School Bazaar)輪到你哋班擺攤位，大家推舉你做核心負責人。你最想負責以下邊個工作崗位？",
-            options: [
-                { id: "A", text: "攤位前線嘅接待員兼PR！著起班衫，用最親切嘅笑容同叫座力吸引全校師生過嚟幫襯，確保每位顧客都玩得開心。" },
-                { id: "B", text: "現場總指揮！負責監督排隊人流、控制遊戲器材有冇故障，隨時處理現場突發情況(例如有人打尖或倒瀉飛排)。" },
-                { id: "C", text: "後勤及物資採購官！精準計算要買幾多原材料、搵邊間批發最平、貨物點樣最快運到學校，確保攤位絕對唔會斷貨。" },
-                { id: "D", text: "攤位總策劃師！負責研究全校攤位嘅分佈圖，分析邊個位置最好人流、設計最吸睛嘅攤位主題同長遠嘅宣傳策略。" }
-            ]
-        },
-        {
-            text: "Q3. 暑假你同屋企人或者朋友去海外自由行，由你負責編排全個行程。你嘅「排行程風格」最接近以下邊一種？",
-            options: [
-                { id: "A", text: "精選當地最熱門嘅打卡 Cafe、米芝蓮餐廳或者精緻體驗活動，確保同行嘅所有人行程中都覺得被照顧得無微不至。" },
-                { id: "B", text: "行程唔使太密，但每個景點之間嘅「交通接駁時間」一定要預留後備方案(例如萬一班車遲到點辦)，確保行程極度流暢。" },
-                { id: "C", text: "行程路線絕對唔走回頭路！精確計算行李箱限重、買手信嘅寄送方法，用最短嘅行車/行路路線去到最多目的地。" },
-                { id: "D", text: "比起普通景點，更想去體驗當地獨特嘅交通工具(如雙層巴士、新幹線、纜車)，觀察人哋嘅城市同交通網絡點解規劃得咁好。" }
-            ]
-        },
-        {
-            text: "Q4. 距離 JUPAS/E-App 選科截止仲有最後一日，你發現自己仲有3個學分/選修志願未填滿，此時你對未來大學生活最大嘅期望係乜？",
-            options: [
-                { id: "A", text: "希望修讀有得著專業制服、著重人際溝通、畢業後可以直接接觸世界各地不同文化旅客嘅實用學科。" },
-                { id: "B", text: "希望學習點樣管理一個大型國際地標(如世界級機場)嘅運作，享受喺幕後掌控全盤大局、指揮若定嘅成功感。" },
-                { id: "C", text: "希望掌握網購、全球物資流轉背後嘅高科技大數據商務知識，畢業後加入高薪、高前途嘅國際物流管理行業。" },
-                { id: "D", text: "希望擁有最廣闊嘅視野，研究全球交通運輸體系、航空公司管理與航空政策，成為未來交通界嘅策略與規劃人才。" }
-            ]
+        let currentQuestionIndex = 0;
+        let answers = [];
+        let currentResult = null;
+        let isPicsAgreed = false;
+
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            setTimeout(() => {
+                const target = document.getElementById(id);
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                lucide.createIcons();
+            }, 60);
         }
-    ];
 
-    const resultsData = {
-        "A": {
-            illustration: "👩‍✈️ ☕ ✨",
-            title: "【空服極限 Carry 俠】",
-            discipline: "(航空機艙及客運服務)",
-            desc: "天生具備神級的情商(EQ)與讀心術！就算遇到瘋狂投訴的奧客，你都能面帶微笑、優雅地用一杯熱茶化解危機。在空中飛行的世界裡，你就是全機乘客的安全感來源。"
-        },
-        "B": {
-            illustration: "🏢 🎧 🧠",
-            title: "【上帝視角：塔台指揮官】",
-            discipline: "(機場營運管理)",
-            desc: "天生自帶超強大腦與抗壓能力！擅長在混亂中理出頭緒，就算機場有 100 班航機同時起降、天氣突變，你都能冷靜調度。你是掌控整個機場運作的核心大腦。"
-        },
-        "C": {
-            illustration: "📦 🌍 🚚",
-            title: "【環球物資傳送門】",
-            discipline: "(航空及物流)",
-            desc: "擁有最強的空間感與時間管理能力！網購的iPhone 點樣最快由工廠送到你手上？疫苗點樣在低溫下安全跨國運送？全靠你的精準計算。你是鏈接全球經濟的幕後黑手。"
-        },
-        "D": {
-            illustration: "🗺️ 🚅 🏙️",
-            title: "【未來交通規劃大師】",
-            discipline: "(航空服務及運輸學)",
-            desc: "充滿好奇心與宏觀視野的策略家。比起單一崗位，你更喜歡研究整條航線、公共交通網絡的規劃。高瞻遠矚，未來的航空政策與運輸大局將由你來改寫！"
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            answers = [];
+            showSection('quiz');
+            renderQuestion();
         }
-    };
 
-    let currentQuestionIndex = 0;
-    let answers = [];
-    let currentResult = null;
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            const total = questions.length;
+            
+            document.getElementById('question-progress').innerText = `PROGRESS: ${currentQuestionIndex + 1} / ${total}`;
+            const percentage = ((currentQuestionIndex + 1) / total) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
 
-    function showSection(id) {
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-        setTimeout(() => {
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0, 0); // 切換頁面時回到頂部
-        }, 50);
-    }
+            document.getElementById('question-text').innerText = q.text;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
 
-    function startQuiz() {
-        currentQuestionIndex = 0;
-        answers = [];
-        showSection('quiz');
-        renderQuestion();
-    }
+            q.options.forEach(opt => {
+                const item = document.createElement('div');
+                item.className = 'option-item';
+                item.innerHTML = `
+                    <div class="option-id">${opt.id}</div>
+                    <div class="option-label">${opt.text}</div>
+                `;
+                item.onclick = function() { selectOption(opt.id, this); };
+                optionsContainer.appendChild(item);
+            });
+            lucide.createIcons();
+        }
 
-    function renderQuestion() {
-        const q = questions[currentQuestionIndex];
-        document.getElementById('question-progress').innerText = `🚩 任務進度： ${currentQuestionIndex + 1} / ${questions.length}`;
-        document.getElementById('question-text').innerText = q.text;
-        
-        const optionsContainer = document.getElementById('options-container');
-        optionsContainer.innerHTML = ''; 
+        function selectOption(id, element) {
+            if (document.querySelector('.option-item.selected')) return;
 
-        q.options.forEach(opt => {
-            const btn = document.createElement('div');
-            btn.className = 'option';
-            btn.innerText = opt.text;
-            btn.onclick = function() { selectOption(opt.id, this); };
-            optionsContainer.appendChild(btn);
-        });
-    }
-
-    function selectOption(id, element) {
-        if (document.querySelector('.option.selected')) return;
-
-        element.classList.add('selected');
-        answers.push(id);
-
-        setTimeout(() => {
-            const quizSection = document.getElementById('quiz');
-            quizSection.classList.add('fade-out');
+            element.classList.add('selected');
+            answers.push(id);
 
             setTimeout(() => {
-                if (currentQuestionIndex < questions.length - 1) {
-                    currentQuestionIndex++;
-                    renderQuestion();
-                    quizSection.classList.remove('fade-out');
-                } else {
-                    quizSection.classList.remove('fade-out');
-                    calculateResult();
+                const quizSection = document.getElementById('quiz');
+                quizSection.classList.add('fade-out');
+
+                setTimeout(() => {
+                    if (currentQuestionIndex < questions.length - 1) {
+                        currentQuestionIndex++;
+                        renderQuestion();
+                        quizSection.classList.remove('fade-out');
+                    } else {
+                        quizSection.classList.remove('fade-out');
+                        calculateResult();
+                    }
+                }, 380);
+            }, 550);
+        }
+
+        function calculateResult() {
+            const counts = answers.reduce((acc, val) => {
+                acc[val] = (acc[val] || 0) + 1;
+                return acc;
+            }, {});
+
+            let maxCount = 0;
+            let finalResultId = 'A';
+
+            for (const [key, value] of Object.entries(counts)) {
+                if (value > maxCount) {
+                    maxCount = value;
+                    finalResultId = key;
                 }
-            }, 400);
-        }, 700);
-    }
+            }
+            renderResult(finalResultId);
+        }
 
-    function calculateResult() {
-        const counts = answers.reduce((acc, val) => {
-            acc[val] = (acc[val] || 0) + 1;
-            return acc;
-        }, {});
+        function renderResult(id) {
+            currentResult = resultsData[id];
+            
+            const badgeIcon = document.getElementById('result-badge-icon');
+            badgeIcon.setAttribute('data-lucide', currentResult.icon);
+            
+            document.getElementById('result-title').innerText = currentResult.title;
+            document.getElementById('result-discipline').innerText = currentResult.discipline;
+            document.getElementById('result-desc').innerText = currentResult.desc;
 
-        let maxCount = 0;
-        let finalResultId = 'A';
+            showSection('result');
+        }
 
-        for (const [key, value] of Object.entries(counts)) {
-            if (value > maxCount) {
-                maxCount = value;
-                finalResultId = key;
+        function toggleAgreement() {
+            isPicsAgreed = !isPicsAgreed;
+            const checkbox = document.getElementById('pics-checkbox');
+            const nextBtn = document.getElementById('btn-to-form');
+
+            if (isPicsAgreed) {
+                checkbox.classList.add('checked');
+                nextBtn.disabled = false;
+            } else {
+                checkbox.classList.remove('checked');
+                nextBtn.disabled = true;
             }
         }
-        renderResult(finalResultId);
-    }
 
-    function renderResult(id) {
-        currentResult = resultsData[id];
-        document.getElementById('result-illustration').innerText = currentResult.illustration;
-        document.getElementById('result-title').innerText = currentResult.title;
-        document.getElementById('result-discipline').innerText = currentResult.discipline;
-        document.getElementById('result-desc').innerText = currentResult.desc;
-        
-        showSection('result');
-    }
+        function submitForm() {
+            const name = document.getElementById('f-name').value.trim();
+            const phone = document.getElementById('f-phone').value.trim();
+            const email = document.getElementById('f-email').value.trim();
+            const school = document.getElementById('f-school').value.trim();
+            const grade = document.getElementById('f-grade').value;
+            const source = document.getElementById('f-source').value;
 
-    function toggleFormBtn() {
-        const isChecked = document.getElementById('pics-agree').checked;
-        document.getElementById('btn-to-form').disabled = !isChecked;
-    }
+            if (!name || !phone || !email || !school || !grade || !source) {
+                const statusBox = document.getElementById('status-box');
+                statusBox.style.display = 'block';
+                statusBox.style.background = 'rgba(239, 68, 68, 0.15)';
+                statusBox.style.border = '1px solid #EF4444';
+                statusBox.style.color = '#FCA5A5';
+                statusBox.innerText = "請填妥所有必填欄位 (*)。";
+                return;
+            }
 
-    function submitForm() {
-        // 取得表單資料
-        const name = document.getElementById('f-name').value.trim();
-        const phone = document.getElementById('f-phone').value.trim();
-        const email = document.getElementById('f-email').value.trim();
-        const school = document.getElementById('f-school').value.trim();
-        const grade = document.getElementById('f-grade').value;
-        const source = document.getElementById('f-source').value;
+            const statusBox = document.getElementById('status-box');
+            const submitBtn = document.getElementById('submit-btn');
 
-        // 簡單驗證
-        if (!name || !phone || !email || !school || !grade || !source) {
-            alert("請填妥所有帶 * 號的必填欄位！");
-            return;
+            submitBtn.disabled = true;
+            statusBox.style.display = 'block';
+            statusBox.style.background = 'rgba(59, 130, 246, 0.15)';
+            statusBox.style.border = '1px solid var(--primary)';
+            statusBox.style.color = '#93C5FD';
+            statusBox.innerHTML = `<span style="display:inline-flex; align-items:center; gap:8px;">通訊節點傳輸中，請稍候...</span>`;
+
+            const formData = new URLSearchParams();
+            formData.append('name', name);
+            formData.append('phone', phone);
+            formData.append('email', email);
+            formData.append('school', school);
+            formData.append('grade', grade);
+            formData.append('source', source);
+            formData.append('title', currentResult.title);
+            formData.append('discipline', currentResult.discipline);
+            formData.append('desc', currentResult.desc);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                showSection('thankyou');
+            })
+            .catch(error => {
+                console.error('Submission Error:', error);
+                statusBox.style.background = 'rgba(239, 68, 68, 0.15)';
+                statusBox.style.border = '1px solid #EF4444';
+                statusBox.style.color = '#FCA5A5';
+                statusBox.innerText = "傳送失敗，請確認網絡連接後再試。";
+                submitBtn.disabled = false;
+            });
         }
 
-        const statusMsg = document.getElementById('status-msg');
-        const submitBtn = document.getElementById('submit-btn');
-
-        submitBtn.disabled = true;
-        statusMsg.style.color = "#E67E22";
-        statusMsg.innerText = "正在傳送資料及寄送電郵，請稍候...";
-
-        // 整理傳送資料
-        const formData = new URLSearchParams();
-        formData.append('name', name);
-        formData.append('phone', phone);
-        formData.append('email', email);
-        formData.append('school', school);
-        formData.append('grade', grade);
-        formData.append('source', source);
-        formData.append('title', currentResult.title);
-        formData.append('discipline', currentResult.discipline);
-        formData.append('desc', currentResult.desc); // 傳送測驗描述以放入 Email
-
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: formData
-        })
-        .then(() => {
-            // 跳轉至感謝頁面
-            showSection('thankyou');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            statusMsg.style.color = "#C0392B";
-            statusMsg.innerText = "❌ 傳送失敗，請檢查網絡後再試。";
-            submitBtn.disabled = false;
+        // Initialize Lucide icons on DOM ready
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
         });
-    }
-</script>
-
+    </script>
 </body>
 </html>
