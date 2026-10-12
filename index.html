@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 航空學分特訓基地：未來機組人員相性測驗</title>
+    <title>2026 航空學分特訓基地：未來航空專業人員屬性測驗</title>
     
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -765,7 +765,7 @@
         <div class="hud-header">
             <div style="display: flex; align-items: center; gap: 8px;">
                 <i data-lucide="plane-takeoff" style="width: 16px; height: 16px; color: var(--primary);"></i>
-                <span>FLIGHT CADET 2026 // APTITUDE RADAR</span>
+                <span>Aviation and Transport Experts 2026 // APTITUDE RADAR</span>
             </div>
             <div class="hud-badge">
                 <span class="radar-dot"></span>
@@ -781,10 +781,10 @@
             <h1 class="hero-title">航空學分特訓基地</h1>
             <div class="hero-subtitle">
                 <i data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
-                未來機組人員相性測驗
+                未來航空專業人員屬性測驗
             </div>
             <p class="hero-desc">
-                探索你未被發掘的航空天賦。透過 4 道精準情境決策題，即時解密你最契合的專屬民航職人命格與專業升學路徑！
+                探索你未被發掘的航空天賦。透過 4 道精準情境決策題，即時解密你最契合的專屬航空專業命格與專業升學路徑！
             </p>
             <div style="text-align: center;">
                 <button class="btn-primary" onclick="startQuiz()">
@@ -821,7 +821,7 @@
         <div id="result" class="section">
             <div class="boarding-pass">
                 <div class="pass-header">
-                    <span>BOARDING PASS // FLIGHT CADET 2026</span>
+                    <span>BOARDING PASS // Aviation and Transport  2026</span>
                     <span style="color: var(--accent-gold);">SECTOR: ASIA-PACIFIC</span>
                 </div>
                 <div class="pass-body">
@@ -833,16 +833,16 @@
                     <div class="pass-desc" id="result-desc"></div>
                 </div>
                 <div class="pass-footer">
-                    <span>CALLSIGN: HK-CADET-2026</span>
+                    <span>CALLSIGN: HK-Aviation-2026</span>
                     <span style="color: #93C5FD;">STATUS: CERTIFIED</span>
                 </div>
             </div>
 
             <!-- Follow-up Prompt Card -->
             <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); border-radius: 20px; padding: 24px; text-align: center;">
-                <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 8px; font-weight: 700;">想保留測驗結果及獲取活動資訊？</h3>
+                <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 8px; font-weight: 700;">想獲取相關學科資訊？</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; max-width: 520px; margin-left: auto; margin-right: auto;">
-                    完成登記即可將完整評估證書發送至指定電子信箱，並優先預留航空特訓基地開放日活動名額！
+                    完成登記即可在日後獲取相關學科資訊，並發送至指定電子信箱，優先了解青衣IVE 商學科精彩嘅航空相關課程活動同資料！
                 </p>
                 <div class="action-row">
                     <button class="btn-primary" onclick="showSection('pics-section')">
@@ -939,8 +939,8 @@
         <!-- Section 5: Registration Form -->
         <div id="form-section" class="section">
             <div style="text-align: left; margin-bottom: 22px;">
-                <div class="hud-badge" style="margin-bottom: 10px;">CADET REGISTRATION</div>
-                <h2 style="font-size: 1.45rem; font-weight: 800;">登記開放日與獲取報告</h2>
+                <div class="hud-badge" style="margin-bottom: 10px;">Aviation Expert Registration</div>
+                <h2 style="font-size: 1.45rem; font-weight: 800;">登記開放日與獲取資訊</h2>
             </div>
 
             <div class="form-grid">
@@ -956,7 +956,7 @@
 
                 <div class="form-group full-width">
                     <label>3. 電子郵件 (Email Address) *</label>
-                    <input type="email" id="f-email" class="form-control" placeholder="用於接收測驗報告 (如: user@gmail.com)" required>
+                    <input type="email" id="f-email" class="form-control" placeholder="用於接收青衣IVE商業系課程資訊 (如: user@gmail.com)" required>
                 </div>
 
                 <div class="form-group">
@@ -989,6 +989,17 @@
                         <option value="其他途徑">其他途徑</option>
                     </select>
                 </div>
+
+                <div class="form-group full-width">
+                    <label>7. 最喜愛開放日活動 (Favorite Activity) *</label>
+                    <select id="f-activity" class="form-control" required>
+                        <option value="" disabled selected>請選擇最喜愛活動</option>
+                        <option value="航空及物流">航空及物流</option>
+                        <option value="航空機艙及客運服務">航空機艙及客運服務</option>
+                        <option value="航空服務及運輸學">航空服務及運輸學</option>
+                        <option value="機場營運管理">機場營運管理</option>
+                    </select>
+                </div>
             </div>
 
             <div id="status-box" class="status-box"></div>
@@ -1012,8 +1023,7 @@
             </div>
             <h1 style="font-size: 1.9rem; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">登記完成，感謝參與！</h1>
             <p style="color: var(--text-sub); font-size: 1rem; line-height: 1.8; max-width: 520px; margin: 0 auto 28px auto;">
-                您的學員測試檔案已建立，詳細相性分析證書已自動發送至指定電子信箱。<br>
-                <span style="font-size: 0.88rem; color: var(--text-muted);">(若數分鐘內未收到，請查閱垃圾郵件匣或促銷標籤)</span>
+                您的學員測試檔案已建立，有關課程資料將在日後發送至指定電子信箱。
             </p>
             <button class="btn-outline" onclick="location.reload()">
                 <i data-lucide="home" style="width: 16px; height: 16px;"></i>
@@ -1069,7 +1079,7 @@
             "A": {
                 icon: "sparkles",
                 title: "【空服極限 Carry 俠】",
-                discipline: "航空機艙及客運服務 (Cabin & Passenger Services)",
+                discipline: "航空機艙及客運服務 (Aviation Inflight & Passenger Services)",
                 desc: "天生具備神級的情商 (EQ) 與細膩讀心術！無論面對多麼緊急或挑剔的突發狀況，你總能保持沉著優雅、化解危機於無形。在萬呎高空的飛行世界中，你的敏銳直覺是整架飛機旅客最堅實的安心依託。"
             },
             "B": {
@@ -1081,7 +1091,7 @@
             "C": {
                 icon: "boxes",
                 title: "【環球物資傳送門】",
-                discipline: "航空及物流管理 (Aviation & Logistics)",
+                discipline: "航空及物流 (Aviation & Logistics)",
                 desc: "擁有卓越的空間結構計算與時間運算天賦！全球最新科技產品如何隔夜跨洲抵達？特種醫藥物資如何精準冷鏈配送？背後全仰賴你近乎苛求的精密航線與裝載推演，是鏈結全球經濟動脈的頂尖專家。"
             },
             "D": {
@@ -1217,8 +1227,9 @@
             const school = document.getElementById('f-school').value.trim();
             const grade = document.getElementById('f-grade').value;
             const source = document.getElementById('f-source').value;
+            const activity = document.getElementById('f-activity').value;
 
-            if (!name || !phone || !email || !school || !grade || !source) {
+            if (!name || !phone || !email || !school || !grade || !source || !activity) {
                 const statusBox = document.getElementById('status-box');
                 statusBox.style.display = 'block';
                 statusBox.style.background = 'rgba(239, 68, 68, 0.15)';
@@ -1245,6 +1256,7 @@
             formData.append('school', school);
             formData.append('grade', grade);
             formData.append('source', source);
+            formData.append('activity', activity);
             formData.append('title', currentResult.title);
             formData.append('discipline', currentResult.discipline);
             formData.append('desc', currentResult.desc);
